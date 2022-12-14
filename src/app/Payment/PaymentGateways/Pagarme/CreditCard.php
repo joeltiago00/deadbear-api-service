@@ -12,7 +12,7 @@ use App\Payment\DTO\CreditCardDTO;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 use App\Payment\PaymentGateways\Pagarme\Responses\CreditCardResponse;
-use App\Payment\PaymentGateways\Pagarme\Transaction\PagarmeTransactionResponse;
+use App\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
 use Illuminate\Support\Fluent;
 use PagarMe\Client;
 

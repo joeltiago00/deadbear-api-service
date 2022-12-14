@@ -33,6 +33,9 @@ class PaymentRequest extends FormRequest
             if ($this->payment_method === PaymentMethodEnum::PIX->description())
                 return $this->validationPixTransaction();
 
+            if ($this->payment_method === PaymentMethodEnum::BOLETO->description())
+                return $this->validationPixTransaction();
+
             throw new PaymentMethodInvalidException();
         }
     }
@@ -74,7 +77,7 @@ class PaymentRequest extends FormRequest
     private function validationPixTransaction(): array
     {
         return [
-            'payment_method' => 'required|in:credit_card,pix',
+            'payment_method' => 'required|in:boleto,pix',
             'is_delivery' => 'required|bool',
             'customer.name' => 'required|string|min:3|max:60',
             'customer.email' => 'required|email:filter,rfc',

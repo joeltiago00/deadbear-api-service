@@ -23,7 +23,7 @@ class PaymentController extends Controller
      */
     public function makeTransaction(PaymentRequest $request, Customer $customer)
     {
-        if (!$response = $this->payment->makePixTransaction($customer,new Fluent($request->validated())))
+        if (!$response = $this->payment->makeBoletoTransaction($customer,new Fluent($request->validated())))
             throw new TransactionNotCreatedException();
 
         return response()->json($response->toArray(), Response::HTTP_OK);

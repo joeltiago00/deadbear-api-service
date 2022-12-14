@@ -5,6 +5,7 @@ namespace App\Core\Payment;
 use App\Core\Address\Address;
 use App\Core\Document\Document;
 use App\Enums\Payment\PaymentMethodEnum;
+use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
 use App\Exceptions\Payment\PixTransactionNotCreatedException;
 use App\Models\Customer as CustomerModel;
 use App\Payment\Contracts\CreditCardResponseInterface;
@@ -42,10 +43,7 @@ class Payment
 
         $transactionResponse = $this->paymentService->creditCard()->createSimpleTransaction($transaction);
 
-        DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
-            $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
-            $this->purchaseRepository->store($transactionModel, $customer, $transaction->items());
-        });
+        $this->saveTransaction($transactionResponse, $customer, $transaction);
 
         return $transactionResponse;
     }
@@ -57,12 +55,25 @@ class Payment
     {
         $transaction = $this->getTransaction($customer, $data);
 
-        $transactionResponse = $this->paymentService->pix()->makeTransaction($transaction);
+        $transactionResponse = $this->paymentService->pix()->createTransaction($transaction);
 
-        DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
-            $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
-            $this->purchaseRepository->store($transactionModel, $customer, $transaction->items());
-        });
+        $this->saveTransaction($transactionResponse, $customer, $transaction);
+
+        return $transactionResponse;
+    }
+
+    /**
+     * @throws BoletoTransactionNotCreatedException
+     * @throws Exception
+     */
+    public function makeBoletoTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    {
+        //TODO:: verificar com chave de produção se volta tudo certo o bar_code
+        $transaction = $this->getTransaction($customer, $data);
+
+        $transactionResponse = $this->paymentService->boleto()->createTransaction($transaction);
+
+        $this->saveTransaction($transactionResponse, $customer, $transaction);
 
         return $transactionResponse;
     }
@@ -136,5 +147,13 @@ class Payment
         );
 
         return new Billing($data->billing['name'], $billingAddress);
+    }
+
+    private function saveTransaction(TransactionResponseInterface $transactionResponse, CustomerModel $customer, TransactionDTO $transaction): void
+    {
+        DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
+            $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
+            $this->purchaseRepository->store($transactionModel, $customer, $transaction->items());
+        });
     }
 }

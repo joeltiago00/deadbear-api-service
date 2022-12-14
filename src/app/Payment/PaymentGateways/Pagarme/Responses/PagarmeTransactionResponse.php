@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\PaymentGateways\Pagarme\Transaction;
+namespace App\Payment\PaymentGateways\Pagarme\Responses;
 
 use App\Payment\Contracts\TransactionResponseInterface;
 use Illuminate\Support\Fluent;
@@ -171,7 +171,7 @@ class PagarmeTransactionResponse implements TransactionResponseInterface
     {
         return [
             'transaction_provider_id' => $this->response->id,
-            'payment_provider' => $this->response->acquirer_name,
+            'payment_provider' => config('app.payment.default_gateway'),
             'status' => $this->response->status,
             'refuse_reason' => $this->response->refuse_reason,
             'status_reason' => $this->response->status_reason,

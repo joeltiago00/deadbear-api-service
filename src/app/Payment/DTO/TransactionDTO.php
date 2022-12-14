@@ -80,8 +80,13 @@ class TransactionDTO implements PagarmeTransactionInterface
         return $this->items;
     }
 
-    public function getExpirationDate()
+    public function getExpirationDate(): Carbon
     {
         return Carbon::now()->addMinutes(30);
+    }
+
+    public function getBoletoExpirationDate(): string
+    {
+        return Carbon::now()->addDays(7)->format('Y-m-d');
     }
 }

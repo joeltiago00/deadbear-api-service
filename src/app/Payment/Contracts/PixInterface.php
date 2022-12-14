@@ -10,5 +10,5 @@ interface PixInterface
     /**
      * @throws PixTransactionNotCreatedException
      */
-    public function makeTransaction(TransactionDTO $transaction): TransactionResponseInterface;
+    public function createTransaction(TransactionDTO $transaction): TransactionResponseInterface;
 }

@@ -28,4 +28,9 @@ class Pagarme extends Payment
     {
         return new Pix($this->client);
     }
+
+    public function boleto()
+    {
+        return new Boleto($this->client);
+    }
 }
