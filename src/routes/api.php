@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PostbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'transaction'], function () {
     Route::post('{customer}', [PaymentController::class, 'makeTransaction']);
+});
+
+Route::group(['prefix' => 'postback'], function(){
+    Route::post('', [PostbackController::class, 'postback']);
 });

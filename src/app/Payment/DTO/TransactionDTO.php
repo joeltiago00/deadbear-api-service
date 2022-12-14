@@ -2,37 +2,39 @@
 
 namespace App\Payment\DTO;
 
+use App\Enums\Payment\PaymentMethodEnum;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use Exception;
+use Illuminate\Support\Carbon;
 
 class TransactionDTO implements PagarmeTransactionInterface
 {
     private int $amount;
-    private string $cardId;
+    private ?string $cardId;
     private string $paymentMethod;
     private string $postbackUrl;
     private Customer $customer;
     private Items $items;
-    private Billing $billing;
+    private ?Billing $billing;
 
     /**
      * @throws Exception
      */
     public function __construct(
         int      $amount,
-        string   $cardId,
         string   $paymentMethod,
         string   $postbackUrl,
         Customer $customer,
         Items    $items,
-        Billing  $billing,
+        ?Billing  $billing,
+        ?string   $cardId,
     )
     {
-//        if ($paymentMethod === PaymentMethodEnum::CREDITCARD->description() && is_null($billing))
-//            throw new Exception('Missing billing dara');
+        if ($paymentMethod === PaymentMethodEnum::CREDITCARD->description() && is_null($billing))
+            throw new Exception('Missing billing dara');
 
         $this->amount = $amount;
         $this->cardId = $cardId;
@@ -48,7 +50,7 @@ class TransactionDTO implements PagarmeTransactionInterface
         return $this->amount;
     }
 
-    public function getCardId(): string
+    public function getCardId(): ?string
     {
         return $this->cardId;
     }
@@ -68,7 +70,7 @@ class TransactionDTO implements PagarmeTransactionInterface
         return $this->customer;
     }
 
-    public function billing(): Billing
+    public function billing(): ?Billing
     {
         return $this->billing;
     }
@@ -76,5 +78,10 @@ class TransactionDTO implements PagarmeTransactionInterface
     public function items(): Items
     {
         return $this->items;
+    }
+
+    public function getExpirationDate()
+    {
+        return Carbon::now()->addMinutes(30);
     }
 }

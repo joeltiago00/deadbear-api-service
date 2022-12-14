@@ -41,7 +41,7 @@ class CreditCard implements CreditCardInterface, PagarmeOperationInterface
      */
     public function createSimpleTransaction(PagarmeTransactionInterface $transaction): TransactionResponseInterface
     {
-        $transaction_data = [
+        $payload = [
             'amount' => $transaction->getAmount(),
             'card_id' => $transaction->getCardId(),
             'payment_method' => $transaction->getPaymentMethod(),
@@ -52,7 +52,7 @@ class CreditCard implements CreditCardInterface, PagarmeOperationInterface
         ];
 
         try {
-            $response = $this->client->transactions()->create($transaction_data);
+            $response = $this->client->transactions()->create($payload);
         } catch (\Exception $exception) {
             throw new CreditCardTransactionNotCreatedException($exception);
         }

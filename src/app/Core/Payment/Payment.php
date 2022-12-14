@@ -5,9 +5,11 @@ namespace App\Core\Payment;
 use App\Core\Address\Address;
 use App\Core\Document\Document;
 use App\Enums\Payment\PaymentMethodEnum;
+use App\Exceptions\Payment\PixTransactionNotCreatedException;
 use App\Models\Customer as CustomerModel;
 use App\Payment\Contracts\CreditCardResponseInterface;
 use App\Payment\Contracts\PaymentServiceInterface;
+use App\Payment\Contracts\TransactionResponseInterface;
 use App\Payment\DTO\CreditCardDTO;
 use App\Payment\DTO\TransactionDTO;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
@@ -15,6 +17,7 @@ use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use App\Repositories\Purchase\PurchaseRepository;
 use App\Repositories\Transaction\TransactionRepository;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Fluent;
 
@@ -23,7 +26,7 @@ class Payment
     private PaymentServiceInterface $paymentService;
 
     public function __construct(
-        private readonly PurchaseRepository $purchaseRepository,
+        private readonly PurchaseRepository    $purchaseRepository,
         private readonly TransactionRepository $transactionRepository,
     )
     {
@@ -31,36 +34,67 @@ class Payment
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function makeCreditCardTransaction(CustomerModel $customer, Fluent $data)
+    public function makeCreditCardTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    {
+        $transaction = $this->getTransaction($customer, $data);
+
+        $transactionResponse = $this->paymentService->creditCard()->createSimpleTransaction($transaction);
+
+        DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
+            $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
+            $this->purchaseRepository->store($transactionModel, $customer, $transaction->items());
+        });
+
+        return $transactionResponse;
+    }
+
+    /**
+     * @throws PixTransactionNotCreatedException
+     */
+    public function makePixTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    {
+        $transaction = $this->getTransaction($customer, $data);
+
+        $transactionResponse = $this->paymentService->pix()->makeTransaction($transaction);
+
+        DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
+            $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
+            $this->purchaseRepository->store($transactionModel, $customer, $transaction->items());
+        });
+
+        return $transactionResponse;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getTransaction(CustomerModel $customer, Fluent $data): TransactionDTO
     {
         $document = new Document($data->customer['document_number']);
 
         $customerDTO = $this->getCustomer($customer, $document, $data);
 
-        $card = $this->getCreditCard($data);
+        $card = $data->payment_method === PaymentMethodEnum::CREDITCARD->description()
+            ? $this->getCreditCard($data)
+            : null;
 
         $items = new Items($data->items);
 
-        $billingAddress = $this->getBillingAddress($data);
+        $billingAddress = $data->payment_method === PaymentMethodEnum::CREDITCARD->description()
+            ? $this->getBillingAddress($data)
+            : null;
 
-        $transaction = new TransactionDTO(
+        return new TransactionDTO(
             $items->getTotalPrice(),
-            $card->getCardId(),
-            PaymentMethodEnum::CREDITCARD->description(),
-            '',
+            $data->payment_method,
+            config('app.payment.providers.pagarme.postback'),
             $customerDTO,
             $items,
-            $billingAddress
+            $billingAddress,
+            !empty($card) ? $card->getCardId() : null,
         );
-
-        $transactionResponse = $this->paymentService->creditCard()->createSimpleTransaction($transaction);
-
-        DB::transaction(function () use ($transactionResponse, $customer, $items) {
-             $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
-             $this->purchaseRepository->store($transactionModel, $customer, $items);
-        });
     }
 
     private function getCreditCard(Fluent $data): CreditCardResponseInterface

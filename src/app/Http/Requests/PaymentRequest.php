@@ -82,7 +82,9 @@ class PaymentRequest extends FormRequest
             'customer.phone_number' => 'required|string|min:13|max:14',
             'items.*.id' => 'required|numeric|min:1',
             'items.*.quantity' => 'required|numeric|min:1',
-            'items.*.unit_price' => 'required|numeric|min:100'
+            'items.*.unit_price' => 'required|numeric|min:100',
+            'items.*.title' => 'required|string|min:3|max:100',
+            'items.*.tangible' => 'required|boolean',
         ];
     }
 }

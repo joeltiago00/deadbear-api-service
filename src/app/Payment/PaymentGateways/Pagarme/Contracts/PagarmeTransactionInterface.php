@@ -10,7 +10,7 @@ interface PagarmeTransactionInterface
 {
     public function getAmount(): int;
 
-    public function getCardId(): string;
+    public function getCardId(): ?string;
 
     public function getPaymentMethod(): string;
 
@@ -18,7 +18,7 @@ interface PagarmeTransactionInterface
 
     public function customer(): Customer;
 
-    public function billing(): Billing;
+    public function billing(): ?Billing;
 
     public function items(): Items;
 }

@@ -57,9 +57,9 @@ class Customer
     }
 
     /**
-     * @return DocumentInterface
+     * @return Document
      */
-    public function document(): DocumentInterface
+    public function document(): Document
     {
         return $this->document;
     }

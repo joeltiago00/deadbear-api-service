@@ -219,7 +219,8 @@ return [
         'default_gateway' => env('PAYMENT_GATEWAY', 'pagarme'),
         'providers' => [
             'pagarme' => [
-                'api_key' => env('PAGARME_API_KEY')
+                'api_key' => env('PAGARME_API_KEY'),
+                'postback' => env('PAGARME_POSTBACK')
             ]
         ]
     ]
