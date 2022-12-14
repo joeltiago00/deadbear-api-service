@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Purchase extends Model
@@ -14,14 +15,16 @@ class Purchase extends Model
     protected $table = 'purchases';
 
     protected $fillable = [
-        'transaction_id', 'is_delivery', 'billing_id', 'shipping_id', 'total_price'
+        'transaction_id', 'customer_id', 'total_price', 'code'
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function transaction(): BelongsTo
     {
         return $this->belongsTo(Transaction::class);
+    }
+
+    public function item(): HasMany
+    {
+        return $this->hasMany(PurchaseItem::class);
     }
 }

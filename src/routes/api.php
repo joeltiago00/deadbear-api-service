@@ -16,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'transaction'], function () {
-    Route::post('', [PaymentController::class, 'makeTransaction']);
+    Route::post('{customer}', [PaymentController::class, 'makeTransaction']);
 });

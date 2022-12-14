@@ -2,7 +2,6 @@
 
 namespace App\Repositories\PurchaseItem;
 
-use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Repositories\Repository;
@@ -14,8 +13,8 @@ class PurchaseItemEloquentRepository extends Repository implements PurchaseItemR
         $this->setModel(PurchaseItem::class);
     }
 
-    public function store(Purchase $purchase, Item $item)
+    public function store(Purchase $purchase, array $item): PurchaseItem
     {
-
+        return $purchase->item()->create(array_merge($item, ['item_id' => $item['id']]));
     }
 }

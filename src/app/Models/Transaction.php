@@ -38,27 +38,4 @@ class Transaction extends Model
         return $this->hasOne(Purchase::class);
     }
 
-    /**
-     * @return HasMany
-     */
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function billingAddress(): HasOne
-    {
-        return $this->hasOne(Address::class)->where('type', AddressTypes::BILLING);
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function shippingAddress(): HasOne
-    {
-        return $this->hasOne(Address::class)->where('type', AddressTypes::SHIPPING);
-    }
 }

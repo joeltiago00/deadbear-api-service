@@ -2,10 +2,8 @@
 
 namespace App\Core\Address;
 
-use App\Core\Address\Contracts\AddressInterface;
-use JetBrains\PhpStorm\ArrayShape;
 
-class Address implements AddressInterface
+class Address
 {
     /**
      * @param string $street
@@ -85,8 +83,6 @@ class Address implements AddressInterface
     /**
      * @return array
      */
-    #[ArrayShape(['country' => "string", 'street' => "string", 'street_number' => "string",
-        'state' => "string", 'city' => "string", 'neighborhood' => "string", 'zipcode' => "string"])]
     public function toArray(): array
     {
         return [

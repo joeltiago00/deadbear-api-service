@@ -2,7 +2,7 @@
 
 namespace App\Payment\Contracts;
 
-use App\Core\Payment\CreditCardDTO;
+use App\Payment\DTO\CreditCardDTO;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 
 interface CreditCardInterface

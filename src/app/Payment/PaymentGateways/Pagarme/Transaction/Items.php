@@ -8,16 +8,10 @@ class Items
 
     private int $totalPrice;
 
-    public function __construct(array $items)
+    public function __construct(array ...$items)
     {
-        $this->items = $items; //TODO:: Receive array of object Item and handle with this
-    }
-
-    private function setItems(array $items): void
-    {
-        foreach ($items as $item) {
-
-        }
+        $this->items = $items;
+        $this->totalPrice = $this->setTotalPrice();
     }
 
     public function getTotalPrice(): int
@@ -25,11 +19,19 @@ class Items
         return $this->totalPrice;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray(): array
+    private function setTotalPrice(): int
     {
-        return $this->items;
+        $totalPrice = 0;
+
+        foreach ($this->items[0] as $item) {
+            $totalPrice += $item['quantity'] * $item['unit_price'];
+        }
+
+        return $totalPrice;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items[0];
     }
 }

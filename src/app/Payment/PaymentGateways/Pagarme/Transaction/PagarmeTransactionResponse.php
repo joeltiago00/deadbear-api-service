@@ -163,13 +163,15 @@ class PagarmeTransactionResponse implements TransactionResponseInterface
         return $this->response->boleto_expiration_date;
     }
 
+
     /**
      * @return array
      */
     public function toArray(): array
     {
         return [
-            'transaction_id' => $this->response->id,
+            'transaction_provider_id' => $this->response->id,
+            'payment_provider' => $this->response->acquirer_name,
             'status' => $this->response->status,
             'refuse_reason' => $this->response->refuse_reason,
             'status_reason' => $this->response->status_reason,

@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PaymentController::class, 'makeTransaction']);
+Route::post('/', [PaymentController::class, 'makeTransaction']);

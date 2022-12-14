@@ -2,24 +2,19 @@
 
 namespace App\Payment\PaymentGateways\Pagarme\Transaction;
 
-use App\Core\Address\Contracts\AddressInterface;
-use JetBrains\PhpStorm\ArrayShape;
+use App\Core\Address\Address;
 
 class Billing
 {
     /**
      * @param string $payerName
-     * @param AddressInterface $address
+     * @param Address $address
      */
     public function __construct(
         private readonly string           $payerName,
-        private readonly AddressInterface $address,
+        private readonly Address $address,
     ) { }
 
-    /**
-     * @return array
-     */
-    #[ArrayShape(['name' => "string", 'address' => "array"])]
     public function toArray(): array
     {
         return [

@@ -2,7 +2,7 @@
 
 namespace App\Payment\PaymentGateways\Pagarme\Transaction;
 
-use App\Core\Document\Contracts\DocumentInterface;
+use App\Core\Document\Document;
 use JetBrains\PhpStorm\ArrayShape;
 
 class Customer
@@ -12,7 +12,7 @@ class Customer
      * @param string $name
      * @param string $email
      * @param string $country
-     * @param DocumentInterface $document
+     * @param Document $document
      * @param string $phone
      */
     public function __construct(
@@ -20,7 +20,7 @@ class Customer
         private readonly string $name,
         private readonly string $email,
         private readonly string $country,
-        private readonly DocumentInterface $document,
+        private readonly Document $document,
         private readonly string $phone
     ) { }
 

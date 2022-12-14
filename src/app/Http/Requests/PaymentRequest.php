@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\PaymentMethodInvalidException;
-use App\Types\PaymentMethodTypes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentRequest extends FormRequest
@@ -27,10 +27,10 @@ class PaymentRequest extends FormRequest
         $name_controller = $this->route()->action['controller'];
 
         if (str_contains($name_controller, '@makeTransaction')) {
-            if ($this->payment_method === PaymentMethodTypes::CREDIT_CARD)
+            if ($this->payment_method === PaymentMethodEnum::CREDITCARD->description())
                 return $this->validationCreditCardTransaction();
 
-            if ($this->payment_method === PaymentMethodTypes::PIX)
+            if ($this->payment_method === PaymentMethodEnum::PIX->description())
                 return $this->validationPixTransaction();
 
             throw new PaymentMethodInvalidException();
@@ -42,9 +42,8 @@ class PaymentRequest extends FormRequest
      */
     private function validationCreditCardTransaction(): array
     {
-        $rules = [
+        return [
             'payment_method' => 'required|in:credit_card,pix',
-            'is_delivery' => 'required|bool',
             'card.holder_name' => 'required|string|min:3|max:60',
             'card.number' => 'required|string|min:15|max:16',
             'card.expiration_date' => 'required|string|min:4|max:4',
@@ -56,27 +55,17 @@ class PaymentRequest extends FormRequest
             'billing.name' => 'required|string|min:3|max:60',
             'billing.address.country' => 'required|string|min:2|max:3',
             'billing.address.street' => 'required|string|min:3|max:80',
-            'billing.address.number' => 'required|string|min:1|max:10',
+            'billing.address.number' => 'required|string|min:1|max:30',
+            'billing.address.neighborhood' => 'required|string|min:1|max:80',
             'billing.address.city' => 'required|string|min:3|max:60',
             'billing.address.state' => 'required|string|min:2|max:60',
             'billing.address.zipcode' => 'required|string|min:2|max:60',
-            'items.*.id' => 'required|numeric|min:1',
-            'items.*.quantity' => 'required|numeric|min:1'
+            'items.*.id' => 'required|string|min:1',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.unit_price' => 'required|numeric|min:100',
+            'items.*.title' => 'required|string|min:3|max:100',
+            'items.*.tangible' => 'required|boolean',
         ];
-
-        if ($this->is_delivery)
-            $rules = array_merge($rules, [
-                'shipping.name' => 'required|string|min:3|max:60',
-                'shipping.fee' => 'required|numeric',
-                'shipping.address.country' => 'required|string|min:2|max:3',
-                'shipping.address.street' => 'required|string|min:3|max:80',
-                'shipping.address.number' => 'required|string|min:1|max:10',
-                'shipping.address.city' => 'required|string|min:3|max:60',
-                'shipping.address.state' => 'required|string|min:2|max:60',
-                'shipping.address.zipcode' => 'required|string|min:2|max:60',
-            ]);
-
-        return $rules;
     }
 
     /**
@@ -84,7 +73,7 @@ class PaymentRequest extends FormRequest
      */
     private function validationPixTransaction(): array
     {
-        $rules = [
+        return [
             'payment_method' => 'required|in:credit_card,pix',
             'is_delivery' => 'required|bool',
             'customer.name' => 'required|string|min:3|max:60',
@@ -92,21 +81,8 @@ class PaymentRequest extends FormRequest
             'customer.document_number' => 'required|string|min:11|max:11',
             'customer.phone_number' => 'required|string|min:13|max:14',
             'items.*.id' => 'required|numeric|min:1',
-            'items.*.quantity' => 'required|numeric|min:1'
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.unit_price' => 'required|numeric|min:100'
         ];
-
-        if ($this->is_delivery)
-            $rules = array_merge($rules, [
-                'shipping.name' => 'required|string|min:3|max:60',
-                'shipping.fee' => 'required|numeric',
-                'shipping.address.country' => 'required|string|min:2|max:3',
-                'shipping.address.street' => 'required|string|min:3|max:80',
-                'shipping.address.number' => 'required|string|min:1|max:10',
-                'shipping.address.city' => 'required|string|min:3|max:60',
-                'shipping.address.state' => 'required|string|min:2|max:60',
-                'shipping.address.zipcode' => 'required|string|min:2|max:60',
-            ]);
-
-        return $rules;
     }
 }

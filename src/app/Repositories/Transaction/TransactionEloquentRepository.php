@@ -26,6 +26,7 @@ class TransactionEloquentRepository extends Repository implements TransactionRep
         try {
             return $customer->transactions()->create($response->toArray());
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             throw new TransactionNotStored($exception);
         }
     }

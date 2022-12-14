@@ -2,10 +2,8 @@
 
 namespace App\Core\Document;
 
-use App\Core\Document\Contracts\DocumentInterface;
-use JetBrains\PhpStorm\ArrayShape;
 
-class Document implements DocumentInterface
+class Document
 {
     /**
      * @var string
@@ -44,7 +42,6 @@ class Document implements DocumentInterface
     /**
      * @return array
      */
-    #[ArrayShape(['type' => "string", 'number' => "string"])]
     public function toArray(): array
     {
         return [
