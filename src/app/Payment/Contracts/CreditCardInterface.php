@@ -2,7 +2,7 @@
 
 namespace App\Payment\Contracts;
 
-use App\Core\Payment\CreditCard;
+use App\Core\Payment\CreditCardDTO;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 
 interface CreditCardInterface
@@ -13,5 +13,5 @@ interface CreditCardInterface
 
     public function createRecurrentTransaction(PagarmeTransactionInterface $transaction): TransactionResponseInterface;
 
-    public function create(CreditCard $card): CreditCardResponseInterface;
+    public function create(CreditCardDTO $card): CreditCardResponseInterface;
 }

@@ -15,9 +15,9 @@ use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use App\Payment\PaymentGateways\Pagarme\Transaction\PagarmeTransaction;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Shipping;
-use App\Repositories\AddressRepository;
-use App\Repositories\CustomerRepository;
-use App\Repositories\TransactionRepository;
+use App\Repositories\Address\AddressEloquentRepository;
+use App\Repositories\Costumer\CustomerEloquentRepository;
+use App\Repositories\Transaction\TransactionEloquentRepository;
 use App\Types\AddressTypes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Fluent;
@@ -25,16 +25,16 @@ use Illuminate\Support\Fluent;
 class Payment
 {
     private PaymentServiceInterface $paymentService;
-    private CustomerRepository $customerRepository;
-    protected TransactionRepository $transactionRepository;
-    private AddressRepository $addressRepository;
+    private CustomerEloquentRepository $customerRepository;
+    protected TransactionEloquentRepository $transactionRepository;
+    private AddressEloquentRepository $addressRepository;
 
     public function __construct()
     {
         $this->paymentService = app(\App\Payment\Payment::class);
-        $this->customerRepository = new CustomerRepository();
-        $this->transactionRepository = new TransactionRepository();
-        $this->addressRepository = new AddressRepository();
+        $this->customerRepository = new CustomerEloquentRepository();
+        $this->transactionRepository = new TransactionEloquentRepository();
+        $this->addressRepository = new AddressEloquentRepository();
     }
 //card_cl6dl1ikh0sru0t9t70ozmt3x
 
@@ -44,7 +44,7 @@ class Payment
      */
     public function createCreditCard(Fluent $data): CreditCardResponseInterface
     {
-        $card = new CreditCard($data->holder_name, $data->number, $data->expiration_date, $data->cvv);
+        $card = new CreditCardDTO($data->holder_name, $data->number, $data->expiration_date, $data->cvv);
 
         return $this->paymentService->creditCard()->create($card);
     }

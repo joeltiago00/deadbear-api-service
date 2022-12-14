@@ -5,7 +5,7 @@ namespace App\Core\Payment;
 use App\Core\Payment\Contracts\CreditCardInterface;
 use JetBrains\PhpStorm\ArrayShape;
 
-class CreditCard implements CreditCardInterface
+class CreditCardDTO implements CreditCardInterface
 {
     /**
      * @param string $holderName

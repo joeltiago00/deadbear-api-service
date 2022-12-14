@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Purchase;
 
 use App\Exceptions\Purchase\PurchaseNotStored;
 use App\Models\Address;
-use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\Transaction;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
+use App\Repositories\PurchaseItem\PurchaseItemEloquentRepository;
+use App\Repositories\Repository;
 
-class PurchaseRepository extends Repository
+class PurchaseEloquentRepository extends Repository implements PurchaseRepository
 {
     public function __construct()
     {
@@ -38,7 +39,7 @@ class PurchaseRepository extends Repository
         $items = $items->toArray();
 
         foreach ($items as $item) {
-            $purchase_items[] = (new PurchaseItemRepository())->store();
+            $purchase_items[] = (new PurchaseItemEloquentRepository())->store();
         }
     }
 }

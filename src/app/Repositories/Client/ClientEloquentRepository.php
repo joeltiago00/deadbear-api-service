@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Client;
 
 use App\Exceptions\Client\ClientNotStored;
 use App\Models\Client;
+use App\Repositories\Repository;
 
-class ClientRepository extends Repository
+class ClientEloquentRepository extends Repository implements ClientRepository
 {
     public function __construct()
     {

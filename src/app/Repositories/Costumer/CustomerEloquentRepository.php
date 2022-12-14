@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Costumer;
 
 use App\Exceptions\Customer\CustomerNotStored;
 use App\Models\Client;
 use App\Models\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Customer as CustomerAlias;
+use App\Repositories\Repository;
 
-class CustomerRepository extends Repository
+class CustomerEloquentRepository extends Repository implements CustomerRepository
 {
     public function __construct()
     {

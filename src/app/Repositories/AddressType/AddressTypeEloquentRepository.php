@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\AddressType;
 
 use App\Exceptions\Address\AddressType\AddressTypeNotFound;
 use App\Exceptions\Address\AddressType\AddressTypeNotStored;
 use App\Models\AddressType;
+use App\Repositories\Repository;
 
-class AddressTypeRepository extends Repository
+class AddressTypeEloquentRepository extends Repository implements AddressTypeRepository
 {
     public function __construct()
     {

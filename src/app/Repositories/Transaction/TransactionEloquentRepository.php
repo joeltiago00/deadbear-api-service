@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Transaction;
 
 use App\Exceptions\Transaction\TransactionNotStored;
 use App\Models\Customer;
 use App\Models\Transaction;
 use App\Payment\Contracts\TransactionResponseInterface;
+use App\Repositories\Repository;
 
-class TransactionRepository extends Repository
+class TransactionEloquentRepository extends Repository implements TransactionRepository
 {
     public function __construct()
     {

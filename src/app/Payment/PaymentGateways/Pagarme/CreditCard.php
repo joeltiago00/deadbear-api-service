@@ -2,6 +2,7 @@
 
 namespace App\Payment\PaymentGateways\Pagarme;
 
+use App\Core\Payment\CreditCardDTO;
 use App\Exceptions\Payment\CreditCardNotCreatedException;
 use App\Exceptions\Payment\CreditCardNotGetedException;
 use App\Exceptions\Payment\CreditCardTransactionNotCreatedException;
@@ -72,11 +73,11 @@ class CreditCard implements CreditCardInterface, PagarmeOperationInterface
     }
 
     /**
-     * @param \App\Core\Payment\CreditCard $card
+     * @param CreditCardDTO $card
      * @return CreditCardResponseInterface
      * @throws CreditCardNotCreatedException
      */
-    public function create(\App\Core\Payment\CreditCard $card): CreditCardResponseInterface
+    public function create(CreditCardDTO $card): CreditCardResponseInterface
     {
         try {
             $card = $this->client->cards()->create($card->toArray());

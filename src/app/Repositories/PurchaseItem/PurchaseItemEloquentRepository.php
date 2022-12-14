@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\PurchaseItem;
 
 use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
+use App\Repositories\Repository;
 
-class PurchaseItemRepository extends Repository
+class PurchaseItemEloquentRepository extends Repository implements PurchaseItemRepository
 {
     public function __construct()
     {
