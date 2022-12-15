@@ -5,7 +5,6 @@ namespace App\Http\Requests\Payment;
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\PaymentMethodInvalidException;
 use Illuminate\Foundation\Http\FormRequest;
-use function App\Http\Requests\str_contains;
 
 class PaymentRequest extends FormRequest
 {
