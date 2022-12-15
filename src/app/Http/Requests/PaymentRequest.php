@@ -34,19 +34,16 @@ class PaymentRequest extends FormRequest
                 return $this->validationPixTransaction();
 
             if ($this->payment_method === PaymentMethodEnum::BOLETO->description())
-                return $this->validationPixTransaction();
+                return $this->validationBoletoTransaction();
 
             throw new PaymentMethodInvalidException();
         }
     }
 
-    /**
-     * @return array
-     */
     private function validationCreditCardTransaction(): array
     {
         return [
-            'payment_method' => 'required|in:credit_card,pix',
+            'payment_method' => 'required|in:credit_card',
             'card.holder_name' => 'required|string|min:3|max:60',
             'card.number' => 'required|string|min:15|max:16',
             'card.expiration_date' => 'required|string|min:4|max:4',
@@ -71,13 +68,27 @@ class PaymentRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return array
-     */
     private function validationPixTransaction(): array
     {
         return [
-            'payment_method' => 'required|in:boleto,pix',
+            'payment_method' => 'required|in:pix',
+            'is_delivery' => 'required|bool',
+            'customer.name' => 'required|string|min:3|max:60',
+            'customer.email' => 'required|email:filter,rfc',
+            'customer.document_number' => 'required|string|min:11|max:11',
+            'customer.phone_number' => 'required|string|min:13|max:14',
+            'items.*.id' => 'required|numeric|min:1',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.unit_price' => 'required|numeric|min:100',
+            'items.*.title' => 'required|string|min:3|max:100',
+            'items.*.tangible' => 'required|boolean',
+        ];
+    }
+
+    private function validationBoletoTransaction(): array
+    {
+        return [
+            'payment_method' => 'required|in:boleto',
             'is_delivery' => 'required|bool',
             'customer.name' => 'required|string|min:3|max:60',
             'customer.email' => 'required|email:filter,rfc',
