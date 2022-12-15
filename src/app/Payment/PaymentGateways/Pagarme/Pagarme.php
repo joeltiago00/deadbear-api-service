@@ -33,4 +33,9 @@ class Pagarme extends Payment
     {
         return new Boleto($this->client);
     }
+
+    public function postbackIsValid(string $payload, string $signature): bool
+    {
+        return $this->client->postbacks()->validate($payload, $signature);
+    }
 }

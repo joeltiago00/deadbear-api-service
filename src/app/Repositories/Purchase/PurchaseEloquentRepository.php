@@ -40,4 +40,17 @@ class PurchaseEloquentRepository extends Repository implements PurchaseRepositor
 
         return $purchase;
     }
+
+    public function getByTransactionId(int $transactionId): Purchase
+    {
+        return $this->model
+            ->newQuery()
+            ->where('transaction_id', $transactionId)
+            ->firstOrFail();
+    }
+
+    public function setDelivered(Purchase $purchase): void
+    {
+        $purchase->update(['is_delivered' => true]);
+    }
 }

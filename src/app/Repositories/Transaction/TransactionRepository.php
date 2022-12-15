@@ -9,4 +9,8 @@ use App\Payment\Contracts\TransactionResponseInterface;
 interface TransactionRepository
 {
     public function store(Customer $customer, TransactionResponseInterface $response): Transaction;
+
+    public function getByTransactionProviderId(int $transactionProviderId): Transaction;
+
+    public function updateTransactionStatus(Transaction $transaction, string $newStatus): bool;
 }

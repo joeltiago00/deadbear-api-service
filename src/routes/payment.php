@@ -16,4 +16,5 @@ Route::group(['prefix' => 'transaction'], function () {
 
 Route::group(['prefix' => 'postback'], function(){
     Route::post('', [PostbackController::class, 'postback']);
+//    ->middleware('postback');
 });

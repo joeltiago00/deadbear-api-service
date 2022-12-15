@@ -11,4 +11,6 @@ return [
     App\Repositories\Purchase\PurchaseRepository::class => App\Repositories\Purchase\PurchaseEloquentRepository::class,
     App\Repositories\PurchaseItem\PurchaseItemRepository::class => App\Repositories\PurchaseItem\PurchaseItemEloquentRepository::class,
     App\Repositories\Transaction\TransactionRepository::class => App\Repositories\Transaction\TransactionEloquentRepository::class,
+    App\Repositories\Payer\PayerRepository::class => App\Repositories\Payer\PayerEloquentRepository::class,
+    App\Repositories\AccountStock\AccountStockRepository::class => App\Repositories\AccountStock\AccountStockEloquentRepository::class
 ];

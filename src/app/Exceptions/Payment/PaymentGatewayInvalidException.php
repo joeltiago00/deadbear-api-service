@@ -5,7 +5,7 @@ namespace App\Exceptions\Payment;
 
 use Illuminate\Http\Response;
 
-class PaymentGatewayInvalidException extends PaymentException
+class PaymentGatewayInvalidException extends InvalidPostback
 {
     public function __construct()
     {

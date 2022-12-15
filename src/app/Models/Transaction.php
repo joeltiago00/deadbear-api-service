@@ -22,20 +22,18 @@ class Transaction extends Model
         'authorization_code', 'amount', 'authorized_amount', 'paid_amount', 'refunded_amount', 'postback_url', 'risk_level',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    /**
-     * @return HasOne
-     */
     public function purchase(): HasOne
     {
         return $this->hasOne(Purchase::class);
     }
 
+    public function payer(): HasOne
+    {
+        return $this->hasOne(Payer::class);
+    }
 }

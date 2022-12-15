@@ -5,7 +5,7 @@ namespace App\Exceptions\Payment;
 
 use Illuminate\Http\Response;
 
-class CreditCardNotCreatedException extends PaymentException
+class CreditCardNotCreatedException extends InvalidPostback
 {
     public function __construct(\Throwable $throwable)
     {

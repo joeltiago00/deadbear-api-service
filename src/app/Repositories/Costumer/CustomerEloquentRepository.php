@@ -72,4 +72,11 @@ class CustomerEloquentRepository extends Repository implements CustomerRepositor
             ->where('email', $email)
             ->firstOrFail();
     }
+
+    public function getById(int $id): Customer
+    {
+        return $this->model
+            ->newQuery()
+            ->findOrFail($id);
+    }
 }

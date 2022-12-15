@@ -5,7 +5,7 @@ namespace App\Exceptions\Payment;
 
 use Illuminate\Http\Response;
 
-class BoletoTransactionNotCreatedException extends PaymentException
+class BoletoTransactionNotCreatedException extends InvalidPostback
 {
     public function __construct(\Throwable $throwable)
     {

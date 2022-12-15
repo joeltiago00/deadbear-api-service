@@ -5,7 +5,7 @@ namespace App\Exceptions\Payment;
 
 use Illuminate\Http\Response;
 
-class TransactionNotCreatedException extends PaymentException
+class TransactionNotCreatedException extends InvalidPostback
 {
     public function __construct()
     {

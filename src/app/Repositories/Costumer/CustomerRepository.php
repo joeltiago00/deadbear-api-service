@@ -15,4 +15,6 @@ interface CustomerRepository
     public function updateByEmail(CustomerDTO $customer): Customer;
 
     public function getByEmail(string $email): Customer;
+
+    public function getById(int $id): Customer;
 }

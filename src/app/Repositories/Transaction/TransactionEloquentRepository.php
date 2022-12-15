@@ -29,4 +29,17 @@ class TransactionEloquentRepository extends Repository implements TransactionRep
             throw new TransactionNotStored($exception);
         }
     }
+
+    public function getByTransactionProviderId(int $transactionProviderId): Transaction
+    {
+        return $this->model
+            ->newQuery()
+            ->where('transaction_provider_id', $transactionProviderId)
+            ->firstOrFail();
+    }
+
+    public function updateTransactionStatus(Transaction $transaction, string $newStatus): bool
+    {
+        return $transaction->update(['status' => $newStatus]);
+    }
 }

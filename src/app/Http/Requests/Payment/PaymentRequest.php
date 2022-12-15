@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Payment;
 
 use App\Enums\Payment\PaymentMethodEnum;
-use App\Exceptions\Payment\PaymentMethodInvalidException;
+use App\Exceptions\Payment\InvalidPostback;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentRequest extends FormRequest
@@ -20,7 +20,7 @@ class PaymentRequest extends FormRequest
 
     /**
      * @return array
-     * @throws PaymentMethodInvalidException
+     * @throws InvalidPostback
      */
     public function rules(): array
     {
@@ -36,7 +36,7 @@ class PaymentRequest extends FormRequest
             if ($this->payment_method === PaymentMethodEnum::BOLETO->description())
                 return $this->validationBoletoTransaction();
 
-            throw new PaymentMethodInvalidException();
+            throw new InvalidPostback();
         }
     }
 
