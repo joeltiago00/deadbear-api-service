@@ -12,9 +12,9 @@ use App\Payment\Contracts\CreditCardResponseInterface;
 use App\Payment\Contracts\PaymentServiceInterface;
 use App\Payment\Contracts\TransactionResponseInterface;
 use App\Payment\DTO\CreditCardDTO;
+use App\Payment\DTO\CustomerDTO;
 use App\Payment\DTO\TransactionDTO;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use App\Repositories\Purchase\PurchaseRepository;
 use App\Repositories\Transaction\TransactionRepository;
@@ -118,9 +118,9 @@ class Payment
         ));
     }
 
-    private function getCustomer(CustomerModel $user, Document $document, Fluent $data): Customer
+    private function getCustomer(CustomerModel $user, Document $document, Fluent $data): CustomerDTO
     {
-        return new Customer(
+        return new CustomerDTO(
             $user->getKey(),
             $user->name,
             $user->email,

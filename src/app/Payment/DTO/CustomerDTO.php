@@ -1,20 +1,11 @@
 <?php
 
-namespace App\Payment\PaymentGateways\Pagarme\Transaction;
+namespace App\Payment\DTO;
 
 use App\Core\Document\Document;
-use JetBrains\PhpStorm\ArrayShape;
 
-class Customer
+class CustomerDTO
 {
-    /**
-     * @param string $externalId
-     * @param string $name
-     * @param string $email
-     * @param string $country
-     * @param Document $document
-     * @param string $phone
-     */
     public function __construct(
         private readonly string $externalId,
         private readonly string $name,
@@ -24,59 +15,36 @@ class Customer
         private readonly string $phone
     ) { }
 
-    /**
-     * @return string
-     */
     public function getExternalId(): string
     {
         return $this->externalId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @return Document
-     */
     public function document(): Document
     {
         return $this->document;
     }
 
-    /**
-     * @return string
-     */
     public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * @return array
-     */
-    #[ArrayShape(['external_id' => "int", 'name' => "string", 'email' => "string", 'type' => "string",
-        'country' => "string", 'documents' => "array", 'phone_numbers' => "string[]"])]
     public function toArray(): array
     {
         return [

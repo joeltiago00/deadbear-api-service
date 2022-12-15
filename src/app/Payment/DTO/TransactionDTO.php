@@ -5,7 +5,6 @@ namespace App\Payment\DTO;
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use Exception;
 use Illuminate\Support\Carbon;
@@ -16,7 +15,7 @@ class TransactionDTO implements PagarmeTransactionInterface
     private ?string $cardId;
     private string $paymentMethod;
     private string $postbackUrl;
-    private Customer $customer;
+    private CustomerDTO $customer;
     private Items $items;
     private ?Billing $billing;
 
@@ -24,13 +23,13 @@ class TransactionDTO implements PagarmeTransactionInterface
      * @throws Exception
      */
     public function __construct(
-        int      $amount,
-        string   $paymentMethod,
-        string   $postbackUrl,
-        Customer $customer,
-        Items    $items,
-        ?Billing  $billing,
-        ?string   $cardId,
+        int         $amount,
+        string      $paymentMethod,
+        string      $postbackUrl,
+        CustomerDTO $customer,
+        Items       $items,
+        ?Billing    $billing,
+        ?string     $cardId,
     )
     {
         if ($paymentMethod === PaymentMethodEnum::CREDITCARD->description() && is_null($billing))
@@ -65,7 +64,7 @@ class TransactionDTO implements PagarmeTransactionInterface
         return $this->postbackUrl;
     }
 
-    public function customer(): Customer
+    public function customer(): CustomerDTO
     {
         return $this->customer;
     }

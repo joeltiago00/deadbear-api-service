@@ -2,8 +2,8 @@
 
 namespace App\Payment\PaymentGateways\Pagarme\Contracts;
 
+use App\Payment\DTO\CustomerDTO;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Customer;
 use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 
 interface PagarmeTransactionInterface
@@ -16,7 +16,7 @@ interface PagarmeTransactionInterface
 
     public function getPostbackUrl(): string;
 
-    public function customer(): Customer;
+    public function customer(): CustomerDTO;
 
     public function billing(): ?Billing;
 
