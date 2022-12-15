@@ -27,6 +27,9 @@ class CustomerService
             $data->phone_number
         );
 
+        if ($this->customerRepository->existsByEmail($dto->getEmail()))
+            return $this->customerRepository->updateByEmail($dto);
+
         return $this->customerRepository->store($dto);
     }
 }

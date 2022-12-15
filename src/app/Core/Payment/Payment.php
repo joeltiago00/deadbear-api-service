@@ -7,7 +7,7 @@ use App\Core\Document\Document;
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
 use App\Exceptions\Payment\PixTransactionNotCreatedException;
-use App\Models\Customer as CustomerModel;
+use App\Models\Customer;
 use App\Payment\Contracts\CreditCardResponseInterface;
 use App\Payment\Contracts\PaymentServiceInterface;
 use App\Payment\Contracts\TransactionResponseInterface;
@@ -37,7 +37,7 @@ class Payment
     /**
      * @throws Exception
      */
-    public function makeCreditCardTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    public function makeCreditCardTransaction(Customer $customer, Fluent $data): TransactionResponseInterface
     {
         $transaction = $this->getTransaction($customer, $data);
 
@@ -51,7 +51,7 @@ class Payment
     /**
      * @throws PixTransactionNotCreatedException
      */
-    public function makePixTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    public function makePixTransaction(Customer $customer, Fluent $data): TransactionResponseInterface
     {
         $transaction = $this->getTransaction($customer, $data);
 
@@ -66,7 +66,7 @@ class Payment
      * @throws BoletoTransactionNotCreatedException
      * @throws Exception
      */
-    public function makeBoletoTransaction(CustomerModel $customer, Fluent $data): TransactionResponseInterface
+    public function makeBoletoTransaction(Customer $customer, Fluent $data): TransactionResponseInterface
     {
         //TODO:: verificar com chave de produção se volta tudo certo o bar_code
         $transaction = $this->getTransaction($customer, $data);
@@ -81,11 +81,11 @@ class Payment
     /**
      * @throws Exception
      */
-    private function getTransaction(CustomerModel $customer, Fluent $data): TransactionDTO
+    private function getTransaction(Customer $customer, Fluent $data): TransactionDTO
     {
-        $document = new Document($data->customer['document_number']);
+        $document = new Document($customer->document_value);
 
-        $customerDTO = $this->getCustomer($customer, $document, $data);
+        $customerDTO = $this->getCustomer($customer, $document);
 
         $card = $data->payment_method === PaymentMethodEnum::CREDITCARD->description()
             ? $this->getCreditCard($data)
@@ -118,15 +118,15 @@ class Payment
         ));
     }
 
-    private function getCustomer(CustomerModel $user, Document $document, Fluent $data): CustomerDTO
+    private function getCustomer(Customer $customer, Document $document): CustomerDTO
     {
         return new CustomerDTO(
-            $user->getKey(),
-            $user->name,
-            $user->email,
+            $customer->getKey(),
+            $customer->name,
+            $customer->email,
             'br',
             $document,
-            $data->customer['phone_number']
+            $customer->phone_value
         );
     }
 
@@ -149,7 +149,7 @@ class Payment
         return new Billing($data->billing['name'], $billingAddress);
     }
 
-    private function saveTransaction(TransactionResponseInterface $transactionResponse, CustomerModel $customer, TransactionDTO $transaction): void
+    private function saveTransaction(TransactionResponseInterface $transactionResponse, Customer $customer, TransactionDTO $transaction): void
     {
         DB::transaction(function () use ($transactionResponse, $customer, $transaction) {
             $transactionModel = $this->transactionRepository->store($customer, $transactionResponse);
