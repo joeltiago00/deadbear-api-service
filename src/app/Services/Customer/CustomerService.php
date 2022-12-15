@@ -14,7 +14,7 @@ class CustomerService
         private readonly CustomerRepository $customerRepository
     ){ }
 
-    public function store(Fluent $data): Customer
+    public function storeOrUpdate(Fluent $data): Customer
     {
         $document = new Document($data->document_number);
 

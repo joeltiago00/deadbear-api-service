@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Payment;
 
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\PaymentMethodInvalidException;
 use Illuminate\Foundation\Http\FormRequest;
+use function App\Http\Requests\str_contains;
 
 class PaymentRequest extends FormRequest
 {
@@ -48,10 +49,6 @@ class PaymentRequest extends FormRequest
             'card.number' => 'required|string|min:15|max:16',
             'card.expiration_date' => 'required|string|min:4|max:4',
             'card.cvv' => 'required|string|min:3|max:4',
-            'customer.name' => 'required|string|min:3|max:60',
-            'customer.email' => 'required|email:filter,rfc',
-            'customer.document_number' => 'required|string|min:11|max:11',
-            'customer.phone_number' => 'required|string|min:13|max:14',
             'billing.name' => 'required|string|min:3|max:60',
             'billing.address.country' => 'required|string|min:2|max:3',
             'billing.address.street' => 'required|string|min:3|max:80',
@@ -73,10 +70,6 @@ class PaymentRequest extends FormRequest
         return [
             'payment_method' => 'required|in:pix',
             'is_delivery' => 'required|bool',
-            'customer.name' => 'required|string|min:3|max:60',
-            'customer.email' => 'required|email:filter,rfc',
-            'customer.document_number' => 'required|string|min:11|max:11',
-            'customer.phone_number' => 'required|string|min:13|max:14',
             'items.*.id' => 'required|numeric|min:1',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.unit_price' => 'required|numeric|min:100',
@@ -90,10 +83,6 @@ class PaymentRequest extends FormRequest
         return [
             'payment_method' => 'required|in:boleto',
             'is_delivery' => 'required|bool',
-            'customer.name' => 'required|string|min:3|max:60',
-            'customer.email' => 'required|email:filter,rfc',
-            'customer.document_number' => 'required|string|min:11|max:11',
-            'customer.phone_number' => 'required|string|min:13|max:14',
             'items.*.id' => 'required|numeric|min:1',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.unit_price' => 'required|numeric|min:100',

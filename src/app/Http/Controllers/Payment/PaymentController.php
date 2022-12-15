@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payment;
 
 use App\Core\Payment\Payment;
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
 use App\Exceptions\Payment\PixTransactionNotCreatedException;
 use App\Exceptions\Payment\TransactionNotCreatedException;
-use App\Http\Requests\PaymentRequest;
-use App\Services\Customer\CustomerService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Payment\PaymentRequest;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Fluent;
@@ -17,8 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PaymentController extends Controller
 {
     public function __construct(
-        private readonly Payment $payment,
-        private readonly CustomerService $customerService
+        private readonly Payment $payment
     ) { }
 
     /**
@@ -27,10 +27,8 @@ class PaymentController extends Controller
      * @throws TransactionNotCreatedException
      * @throws Exception
      */
-    public function makeTransaction(PaymentRequest $request): JsonResponse
+    public function makeTransaction(PaymentRequest $request, Customer $customer): JsonResponse
     {
-        $customer = $this->customerService->store($request->customer);
-
         if (!$response = match ($request->payment_method) {
             PaymentMethodEnum::CREDITCARD->description() => $this->payment->makeCreditCardTransaction($customer,new Fluent($request->validated())),
             PaymentMethodEnum::BOLETO->description() => $this->payment->makeBoletoTransaction($customer,new Fluent($request->validated())),
