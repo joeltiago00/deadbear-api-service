@@ -15,7 +15,7 @@ class Purchase extends Model
     protected $table = 'purchases';
 
     protected $fillable = [
-        'transaction_id', 'customer_id', 'total_price', 'code'
+        'transaction_id', 'customer_id', 'total_price', 'code', 'is_delivered'
     ];
 
     public function transaction(): BelongsTo

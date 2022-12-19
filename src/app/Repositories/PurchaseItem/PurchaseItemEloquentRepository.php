@@ -15,6 +15,6 @@ class PurchaseItemEloquentRepository extends Repository implements PurchaseItemR
 
     public function store(Purchase $purchase, array $item): PurchaseItem
     {
-        return $purchase->item()->create(array_merge($item, ['item_id' => $item['id']]));
+        return $purchase->purchaseItems()->create(array_merge($item, ['item_id' => $item['id']]));
     }
 }

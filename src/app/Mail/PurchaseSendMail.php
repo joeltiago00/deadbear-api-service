@@ -28,7 +28,7 @@ class PurchaseSendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name')
+        return $this->view('emails.purchase-send')
             ->with([
                 'customer' => $this->customer,
                 'accounts' => $this->dtos

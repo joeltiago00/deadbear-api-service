@@ -28,9 +28,11 @@ class PurchaseEloquentRepository extends Repository implements PurchaseRepositor
             $purchase = $transaction->purchase()->create([
                 'total_price' => $items->getTotalPrice(),
                 'customer_id' => $customer->getKey(),
-                'code' => Str::random()
+                'code' => Str::random(),
+                'is_delivered' => false //TODO:: REMOVER CAMPO
             ]);
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             throw new PurchaseNotStored($exception);
         }
 

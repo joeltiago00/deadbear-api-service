@@ -2,7 +2,6 @@
 
 namespace App\Repositories\AccountStock;
 
-use App\Models\Item;
 use App\Models\Stock;
 use App\Repositories\Repository;
 use Carbon\Carbon;
@@ -25,7 +24,7 @@ class AccountStockEloquentRepository extends Repository implements AccountStockR
             ->get();
     }
 
-    public function setAccountDelivered(Item $item, int $purchaseId): bool
+    public function setAccountDelivered(Stock $item, int $purchaseId): bool
     {
         return $item->update([
             'is_delivered' => true,

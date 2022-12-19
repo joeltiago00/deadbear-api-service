@@ -5,6 +5,7 @@ namespace App\Services\Delivery;
 use App\Core\ProductSend\ItemDTO;
 use App\Enums\Payment\PaymentStatusEnum;
 use App\Events\AutoSendBuy;
+use App\Mail\EmptyStockMail;
 use App\Mail\PurchaseSendMail;
 use App\Models\Purchase;
 use App\Repositories\AccountStock\AccountStockRepository;
@@ -18,8 +19,10 @@ class AccountDeliveryService
 {
     public function __construct(
         private readonly AccountStockRepository $accountStockRepository,
-        private readonly PurchaseRepository $purchaseRepository
-    ){ }
+        private readonly PurchaseRepository     $purchaseRepository
+    )
+    {
+    }
 
     /**
      * @throws \Exception
@@ -31,26 +34,41 @@ class AccountDeliveryService
 
             $accounts = $this->getAccounts($items);
 
+            //TODO:: handle this
+            if ($accounts->count() === 0) {
+                //TODO:: adicionar tipo de conta no email
+                Mail::to('contato@deadbear.com')->send(new EmptyStockMail());
+                return;
+            }
+
             $dtos = $this->getItemsDTO($accounts);
 
-            $this->setAccountsDelivered($event->purchase, $items, $accounts);
-
             try {
+                DB::beginTransaction();
+
+                $this->setAccountsDelivered($event->purchase, $accounts, $accounts);
+
                 Mail::to($event->customer->email)->send(new PurchaseSendMail($event->customer, $dtos));
+
+                DB::commit();
             } catch (\Exception $exception) {
+                DB::rollBack();
+                //TODO:: implementar log e excessão customizada!
                 throw new \Exception('Email not send.');
             }
         }
     }
 
-    private function setAccountsDelivered(Purchase $purchase, Collection $items, SupportCollection $accounts): void
+    private function setAccountsDelivered(Purchase $purchase, SupportCollection $items, SupportCollection $accounts): void
     {
-        DB::transaction(function () use ($purchase, $items, $accounts){
-             $this->purchaseRepository->setDelivered($purchase);
+        DB::transaction(function () use ($purchase, $items, $accounts) {
+            $this->purchaseRepository->setDelivered($purchase);
 
             $accounts->map(function ($account) use ($purchase) {
-                 $this->accountStockRepository->setAccountDelivered($account, $purchase->id);
-             });
+                $account->each(function ($acc) use ($purchase) {
+                    $this->accountStockRepository->setAccountDelivered($acc, $purchase->id);
+                });
+            });
         });
     }
 
@@ -58,23 +76,27 @@ class AccountDeliveryService
     {
         $items = collect();
 
-        $accounts->map(function ($accounts) use($items) {
-            return $accounts->map(function ($account) use($items){
+        $accounts->map(function ($accounts) use ($items) {
+            return $accounts->map(function ($account) use ($items) {
                 $items->push(new ItemDTO(
                     $account->login,
                     $account->password,
                     $account->email
                 ));
-            })->toArray();
-        })->toArray();
+            });
+        });
 
         return $items->toArray();
     }
 
     private function getAccounts(Collection $items): SupportCollection|Collection
     {
-        return $items->map(function ($item) {
-            return $this->accountStockRepository->getAccounts($item->item_id, $item->quantity);
+        $accounts = collect();
+
+        $items->each(function ($item) use ($accounts) {
+            return $accounts->push($this->accountStockRepository->getAccounts($item->item_id, $item->quantity));
         });
+
+        return $accounts;
     }
 }

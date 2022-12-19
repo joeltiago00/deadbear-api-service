@@ -45,7 +45,7 @@ class CreditCard implements CreditCardInterface, PagarmeOperationInterface
             'amount' => $transaction->getAmount(),
             'card_id' => $transaction->getCardId(),
             'payment_method' => $transaction->getPaymentMethod(),
-//            'postback_url' => $transaction->getPostbackUrl(),
+            'postback_url' => $transaction->getPostbackUrl(),
             'customer' => $transaction->customer()->toArray(),
             'billing' => $transaction->billing()->toArray(),
             'items' => $transaction->items()->getItems()
