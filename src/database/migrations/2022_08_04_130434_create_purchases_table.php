@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,24 +15,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('purchases', function (Blueprint $table) {
+
             $table->id();
             $table->unsignedBigInteger('transaction_id');
-            $table->boolean('is_delivery');
-            $table->unsignedBigInteger('billing_id')->nullable();
-            $table->unsignedBigInteger('shipping_id')->nullable();
+            $table->boolean('is_delivered')->default(false);
             $table->string('total_price');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('transaction_id')
                 ->references('id')
-                ->on('transactions');
-            $table->foreign('billing_id')
-                ->references('id')
-                ->on('addresses');
-            $table->foreign('shipping_id')
-                ->references('id')
-                ->on('addresses');
+                ->on('transactions')
+                ->onDelete('cascade');
         });
     }
 
@@ -42,6 +37,8 @@ return new class extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('purchases');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 };

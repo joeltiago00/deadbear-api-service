@@ -20,6 +20,15 @@ return new class extends Migration
             $table->string('quantity');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('purchase_id')
+                ->references('id')
+                ->on('purchases')
+                ->onDelete('cascade');
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('items')
+                ->onDelete('cascade');
         });
     }
 

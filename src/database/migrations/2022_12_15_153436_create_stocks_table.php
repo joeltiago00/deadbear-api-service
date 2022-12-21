@@ -13,28 +13,26 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('account_stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('purchase_id')->nullable();
-            $table->unsignedBigInteger('purchase_item_id')->nullable();
             $table->string('login');
             $table->string('password');
             $table->string('email');
-            $table->boolean('is_delivered')->nullable();
+            $table->boolean('is_delivered')->default(false);
             $table->timestamp('delivered_at');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('item_id')
                 ->references('id')
-                ->on('items');
+                ->on('items')
+                ->onDelete('cascade');
             $table->foreign('purchase_id')
                 ->references('id')
-                ->on('purchases');
-            $table->foreign('purchase_item_id')
-                ->references('id')
-                ->on('purchase_items');
+                ->on('purchases')
+                ->onDelete('cascade');
         });
     }
 
@@ -45,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('account_stocks');
     }
 };
