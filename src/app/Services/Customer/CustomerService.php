@@ -19,15 +19,15 @@ class CustomerService
         $document = new Document($data->document_number);
 
         $dto = new CustomerDTO(
-            '1',
-            $data->name,
+            $data->first_name,
+            $data->last_name,
             $data->email,
             'br',
             $document,
             $data->phone_number
         );
 
-        if ($this->customerRepository->existsByEmail($dto->getEmail()))
+        if ($this->customerRepository->existsByEmail($dto->email))
             return $this->customerRepository->updateByEmail($dto);
 
         return $this->customerRepository->store($dto);

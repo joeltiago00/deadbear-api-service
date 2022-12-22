@@ -24,12 +24,13 @@ class CustomerEloquentRepository extends Repository implements CustomerRepositor
     {
         try {
             return $this->model->create([
-                'name' => $customer->getName(),
-                'email' => $customer->getEmail(),
-                'document_type' => $customer->document()->getType(),
-                'document_value' => $customer->document()->getValue(),
+                'first_name' => $customer->firstName,
+                'last_name' => $customer->lastName,
+                'email' => $customer->email,
+                'document_type' => $customer->document->getType(),
+                'document_value' => $customer->document->getValue(),
                 'phone_country' => '55',//TODO:: (Joel 15/08) Handle this
-                'phone_value' => $customer->getPhone()
+                'phone_value' => $customer->phone
             ]);
         } catch (Exception $exception) {
             throw new CustomerNotStored($exception);
@@ -51,14 +52,15 @@ class CustomerEloquentRepository extends Repository implements CustomerRepositor
     {
         $customer = $this->model
             ->newQuery()
-            ->where('email', $customer->getEmail());
+            ->where('email', $customer->email);
 
         if (!$customer->update([
-            'name' => $customer->getName(),
-            'document_type' => $customer->document()->getType(),
-            'document_value' => $customer->document()->getValue(),
+            'first_name' => $customer->firstName,
+            'last_name' => $customer->lastName,
+            'document_type' => $customer->document->getType(),
+            'document_value' => $customer->document->getValue(),
             'phone_country' => '55',//TODO:: (Joel 15/08) Handle this
-            'phone_value' => $customer->getPhone()
+            'phone_value' => $customer->phone
         ]))
             throw new CustomerNotUpdated();
 
