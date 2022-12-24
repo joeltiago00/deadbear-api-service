@@ -7,13 +7,13 @@ use App\Core\Document\Document;
 class CustomerDTO
 {
     public function __construct(
-        public readonly string $firstName,
-        public readonly string $lastName,
-        public readonly string $email,
-        public readonly string $country,
-        public readonly Document $document,
-        public readonly string $phone,
-        public readonly string $externalId = '',
+        public readonly ?string $firstName,
+        public readonly ?string $lastName,
+        public readonly ?string $email,
+        public readonly ?string $country,
+        public readonly ?Document $document,
+        public readonly ?string $phone,
+        public readonly ?string $externalId = '',
     ) { }
 
     public function toArray(): array

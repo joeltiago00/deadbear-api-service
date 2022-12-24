@@ -5,14 +5,16 @@ namespace App\Services\Customer;
 use App\Core\Document\Document;
 use App\Models\Customer;
 use App\Payment\DTO\CustomerDTO;
-use App\Repositories\Costumer\CustomerRepository;
+use App\Repositories\Custumer\CustomerRepository;
 use Illuminate\Support\Fluent;
 
 class CustomerService
 {
     public function __construct(
         private readonly CustomerRepository $customerRepository
-    ){ }
+    )
+    {
+    }
 
     public function storeOrUpdate(Fluent $data): Customer
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Costumer;
+namespace App\Repositories\Custumer;
 
 use App\Exceptions\Customer\CustomerNotStored;
 use App\Exceptions\Customer\CustomerNotUpdated;
@@ -48,19 +48,19 @@ class CustomerEloquentRepository extends Repository implements CustomerRepositor
     /**
      * @throws CustomerNotUpdated
      */
-    public function updateByEmail(CustomerDTO $customer): Customer
+    public function updateByEmail(CustomerDTO $customerDTO): Customer
     {
         $customer = $this->model
             ->newQuery()
-            ->where('email', $customer->email);
+            ->where('email', $customerDTO->email);
 
         if (!$customer->update([
-            'first_name' => $customer->firstName,
-            'last_name' => $customer->lastName,
-            'document_type' => $customer->document->getType(),
-            'document_value' => $customer->document->getValue(),
+            'first_name' => $customerDTO->firstName,
+            'last_name' => $customerDTO->lastName,
+            'document_type' => $customerDTO->document->getType(),
+            'document_value' => $customerDTO->document->getValue(),
             'phone_country' => '55',//TODO:: (Joel 15/08) Handle this
-            'phone_value' => $customer->phone
+            'phone_value' => $customerDTO->phone
         ]))
             throw new CustomerNotUpdated();
 

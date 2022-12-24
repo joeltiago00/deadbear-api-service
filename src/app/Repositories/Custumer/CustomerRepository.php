@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Costumer;
+namespace App\Repositories\Custumer;
 
 use App\Models\Customer;
 use App\Payment\DTO\CustomerDTO;

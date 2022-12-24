@@ -10,6 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 */
 
-//Route::group(['prefix' => 'customer'], function () {
-//    Route::post('a', [CustomerController::class, 'storeOrUpdate']);
-//});
+Route::group(['prefix' => 'customer'], function () {
+    Route::post('', [CustomerController::class, 'storeOrUpdate']);
+});

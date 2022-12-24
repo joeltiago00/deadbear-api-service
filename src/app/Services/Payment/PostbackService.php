@@ -7,7 +7,7 @@ use App\Core\Payment\Pix\Payer;
 use App\Enums\Payment\PaymentMethodEnum;
 use App\Events\AutoSendBuy;
 use App\Models\Transaction;
-use App\Repositories\Costumer\CustomerRepository;
+use App\Repositories\Custumer\CustomerRepository;
 use App\Repositories\Payer\PayerRepository;
 use App\Repositories\Purchase\PurchaseRepository;
 use App\Repositories\Transaction\TransactionRepository;

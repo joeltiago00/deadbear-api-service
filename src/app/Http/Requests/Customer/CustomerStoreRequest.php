@@ -11,7 +11,7 @@ class CustomerStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,14 +21,14 @@ class CustomerStoreRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'first_name' => 'required|string|min:3|max:60',
             'last_name' => 'nullable|string|min:3|max:60',
             'email' => 'required|email:filter,rfc',
             'document_number' => 'required|string|min:11|max:11',
-            'phone_number' => 'required|string|min:13|max:14',
+            'phone_number' => 'required|string|min:10|max:11',
         ];
     }
 }
