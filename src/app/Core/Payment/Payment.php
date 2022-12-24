@@ -121,12 +121,13 @@ class Payment
     private function getCustomer(Customer $customer, Document $document): CustomerDTO
     {
         return new CustomerDTO(
-            $customer->getKey(),
-            $customer->name,
+            $customer->first_name,
+            $customer->last_name,
             $customer->email,
             'br',
             $document,
-            $customer->phone_value
+            '+' .$customer->phone_value,
+            $customer->getKey(),
         );
     }
 

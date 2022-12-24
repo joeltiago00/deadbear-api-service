@@ -20,7 +20,7 @@ class CustomerDTO
     {
         return [
             'external_id' => $this->externalId,
-            'name' => $this->name,
+            'name' => sprintf('%s %s', $this->firstName, $this->lastName),
             'email' => $this->email,
             'type' => 'individual',
             'country' => $this->country,

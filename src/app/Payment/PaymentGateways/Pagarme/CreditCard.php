@@ -54,6 +54,7 @@ class CreditCard implements CreditCardInterface, PagarmeOperationInterface
         try {
             $response = $this->client->transactions()->create($payload);
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             throw new CreditCardTransactionNotCreatedException($exception);
         }
 

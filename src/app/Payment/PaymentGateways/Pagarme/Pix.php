@@ -24,18 +24,18 @@ class Pix implements PixInterface, PagarmeOperationInterface
     {
         $payload = [
             'customer' => [
-                'external_id' => $transaction->customer()->getExternalId(),
-                'name' => $transaction->customer()->getName(),
-                'email' => $transaction->customer()->getEmail(),
+                'external_id' => $transaction->customer()->externalId,
+                'name' => sprintf('%s %s', $transaction->customer()->firstName, $transaction->customer()->lastName),
+                'email' => $transaction->customer()->email,
                 'type' => 'individual',
                 'country' => 'br',
                 'documents' => [
                     [
-                        'type' => $transaction->customer()->document()->getType(),
-                        'number' => $transaction->customer()->document()->getValue()
+                        'type' => $transaction->customer()->document->getType(),
+                        'number' => $transaction->customer()->document->getValue()
                     ]
                 ],
-                'phone_numbers' => [$transaction->customer()->getPhone()]
+                'phone_numbers' => [$transaction->customer()->phone]
             ],
             'items' => $transaction->items()->getItems(),
             'postback_url' => $transaction->getPostbackUrl(),

@@ -19,6 +19,11 @@ class PostbackController extends Controller
     public function postback(Request $request): void
     {
         //TODO:: testar essa implementação!!
-        $this->postbackService->updateTransaction(new Fluent($request->all()));
+        try {
+            $this->postbackService->updateTransaction(new Fluent($request->all()));
+
+        } catch (\Exception $exception) {
+            file_put_contents(storage_path('error.txt'), $exception->getMessage());
+        }
     }
 }

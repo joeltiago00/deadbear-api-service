@@ -2,7 +2,7 @@
 
 namespace App\Repositories\AccountStock;
 
-use App\Models\Stock;
+use App\Models\AccountStock;
 use App\Repositories\Repository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,7 +11,7 @@ class AccountStockEloquentRepository extends Repository implements AccountStockR
 {
     public function __construct()
     {
-        $this->setModel(Stock::class);
+        $this->setModel(AccountStock::class);
     }
 
     public function getAccounts(int $itemId, int $quantity): Collection
@@ -24,7 +24,7 @@ class AccountStockEloquentRepository extends Repository implements AccountStockR
             ->get();
     }
 
-    public function setAccountDelivered(Stock $item, int $purchaseId): bool
+    public function setAccountDelivered(AccountStock $item, int $purchaseId): bool
     {
         return $item->update([
             'is_delivered' => true,

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('email');
             $table->boolean('is_delivered')->default(false);
-            $table->timestamp('delivered_at');
+            $table->timestamp('delivered_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
