@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Transaction\TransactionRepository;
 use App\Services\Payment\PostbackService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostbackController extends Controller
 {
@@ -16,14 +17,10 @@ class PostbackController extends Controller
     {
     }
 
-    public function postback(Request $request): void
+    public function postback(Request $request): JsonResponse
     {
-        //TODO:: testar essa implementação!!
-        try {
-            $this->postbackService->updateTransaction(new Fluent($request->all()));
+        $this->postbackService->updateTransaction(new Fluent($request->all()));
 
-        } catch (\Exception $exception) {
-            file_put_contents(storage_path('error.txt'), $exception->getMessage());
-        }
+        return response()->json([], Response::HTTP_OK);
     }
 }

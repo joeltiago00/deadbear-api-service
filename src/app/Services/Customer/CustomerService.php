@@ -20,6 +20,7 @@ class CustomerService
     {
         $document = new Document($data->document_number);
 
+        //TODO:: handle with country
         $dto = new CustomerDTO(
             $data->first_name,
             $data->last_name,
