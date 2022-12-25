@@ -2,8 +2,7 @@
 
 namespace App\Services\Payment\PaymentGateways\Pagarme\Transaction;
 
-use App\Core\Address\Contracts\AddressInterface;
-use JetBrains\PhpStorm\ArrayShape;
+use App\Core\Address\Address;
 
 class Shipping
 {
@@ -11,14 +10,14 @@ class Shipping
      * @param string $receiverName
      * @param int $fee
      * @param string $deliveryDate
-     * @param AddressInterface $address
+     * @param Address $address
      * @param bool $expedited
      */
     public function __construct(
         private readonly string $receiverName,
         private readonly int $fee, //price of delivery
         private readonly string $deliveryDate,
-        private readonly AddressInterface $address,
+        private readonly Address $address,
         private readonly bool $expedited = false,
     ) { }
 
@@ -55,9 +54,9 @@ class Shipping
     }
 
     /**
-     * @return AddressInterface
+     * @return Address
      */
-    public function getAddress(): AddressInterface
+    public function getAddress(): Address
     {
         return $this->address;
     }
@@ -65,8 +64,6 @@ class Shipping
     /**
      * @return array
      */
-    #[ArrayShape(['name' => "string", 'fee' => "int", 'delivery_date' => "string",
-        'expedited' => "bool", 'address' => "array"])]
     public function toArray(): array
     {
         return [
