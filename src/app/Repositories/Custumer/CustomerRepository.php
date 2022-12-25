@@ -3,8 +3,8 @@
 namespace App\Repositories\Custumer;
 
 use App\Models\Customer;
-use App\Payment\DTO\CustomerDTO;
-use App\Payment\DTO\CustomerDTO as PagarmeCustomer;
+use App\Services\Payment\DTO\CustomerDTO;
+use App\Services\Payment\DTO\CustomerDTO as PagarmeCustomer;
 
 interface CustomerRepository
 {

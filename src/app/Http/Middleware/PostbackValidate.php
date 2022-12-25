@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\Payment\Postback\InvalidPostback;
-use App\Payment\Payment;
+use App\Services\Payment\PaymentService;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class PostbackValidate
 
         $payload = file_get_contents("php://input");
 
-        $paymentService = app(Payment::class);
+        $paymentService = app(PaymentService::class);
 
         if (!$paymentService->postbackIsValid($payload, $signature))
             throw new InvalidPostback();

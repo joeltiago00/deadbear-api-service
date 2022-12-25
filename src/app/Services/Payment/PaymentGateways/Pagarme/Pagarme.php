@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Payment\PaymentGateways\Pagarme;
+namespace App\Services\Payment\PaymentGateways\Pagarme;
 
-use App\Payment\Contracts\CreditCardInterface;
-use App\Payment\Contracts\PixInterface;
-use App\Payment\Payment;
+use App\Services\Payment\Contracts\CreditCardInterface;
+use App\Services\Payment\Contracts\PixInterface;
+use App\Services\Payment\PaymentService;
 use PagarMe\Client;
 
-class Pagarme extends Payment
+class Pagarme extends PaymentService
 {
     /**
      * @param string $apiKey

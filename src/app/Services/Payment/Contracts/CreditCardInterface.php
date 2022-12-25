@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Payment\Contracts;
+namespace App\Services\Payment\Contracts;
 
-use App\Payment\DTO\CreditCardDTO;
-use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
+use App\Services\Payment\DTO\CreditCardDTO;
+use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
 
 interface CreditCardInterface
 {

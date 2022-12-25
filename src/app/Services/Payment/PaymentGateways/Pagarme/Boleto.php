@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Payment\PaymentGateways\Pagarme;
+namespace App\Services\Payment\PaymentGateways\Pagarme;
 
-use App\Exceptions\Payment\PixTransactionNotCreatedException;
-use App\Payment\Contracts\PixInterface;
-use App\Payment\Contracts\TransactionResponseInterface;
-use App\Payment\DTO\TransactionDTO;
-use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
-use App\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
+use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
+use App\Services\Payment\DTO\TransactionDTO;
+use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
+use App\Services\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
 use Illuminate\Support\Fluent;
 use PagarMe\Client;
 
-class Pix implements PixInterface, PagarmeOperationInterface
+class Boleto implements PagarmeOperationInterface
 {
-    public function __construct(
-        private readonly Client $client
-    ){ }
+
+    public function __construct(private readonly Client $client)
+    {
+    }
 
     /**
-     * @throws PixTransactionNotCreatedException
+     * @throws BoletoTransactionNotCreatedException
      */
-    public function createTransaction(TransactionDTO $transaction): TransactionResponseInterface
+    public function createTransaction(TransactionDTO $transaction): PagarmeTransactionResponse
     {
         $payload = [
             'customer' => [
@@ -41,13 +40,13 @@ class Pix implements PixInterface, PagarmeOperationInterface
             'postback_url' => $transaction->getPostbackUrl(),
             'payment_method' => $transaction->getPaymentMethod(),
             'amount' => $transaction->getAmount(),
-            'pix_expiration_date' => $transaction->getExpirationDate(),
+            'boleto_expiration_date' => $transaction->getBoletoExpirationDate(),
         ];
 
         try {
             $response = $this->client->transactions()->create($payload);
         } catch (\Exception $exception) {
-            throw new PixTransactionNotCreatedException($exception);
+            throw new BoletoTransactionNotCreatedException($exception);
         }
 
         return new PagarmeTransactionResponse(new Fluent($response));

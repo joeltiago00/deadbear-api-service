@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\PaymentGateways\Pagarme\Transaction;
+namespace App\Services\Payment\PaymentGateways\Pagarme\Transaction;
 
 class Items
 {

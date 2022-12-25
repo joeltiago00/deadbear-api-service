@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Payment\Payment;
-use App\Payment\PaymentServiceManager;
+use App\Services\Payment\PaymentService;
+use App\Services\Payment\PaymentServiceManager;
 use Illuminate\Support\ServiceProvider;
 
 class PaymentServiceProvider extends ServiceProvider
@@ -15,6 +15,6 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(Payment::class, fn() => (new PaymentServiceManager())->resolve());
+        $this->app->bind(PaymentService::class, fn() => (new PaymentServiceManager())->resolve());
     }
 }

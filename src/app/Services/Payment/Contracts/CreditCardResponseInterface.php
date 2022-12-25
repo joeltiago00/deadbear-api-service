@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\Contracts;
+namespace App\Services\Payment\Contracts;
 
 interface CreditCardResponseInterface
 {

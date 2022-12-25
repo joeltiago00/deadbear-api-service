@@ -8,16 +8,17 @@ use App\Enums\Payment\PaymentMethodEnum;
 use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
 use App\Exceptions\Payment\PixTransactionNotCreatedException;
 use App\Models\Customer;
-use App\Payment\Contracts\CreditCardResponseInterface;
-use App\Payment\Contracts\PaymentServiceInterface;
-use App\Payment\Contracts\TransactionResponseInterface;
-use App\Payment\DTO\CreditCardDTO;
-use App\Payment\DTO\CustomerDTO;
-use App\Payment\DTO\TransactionDTO;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use App\Repositories\Purchase\PurchaseRepository;
 use App\Repositories\Transaction\TransactionRepository;
+use App\Services\Payment\Contracts\CreditCardResponseInterface;
+use App\Services\Payment\Contracts\PaymentServiceInterface;
+use App\Services\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Payment\DTO\CreditCardDTO;
+use App\Services\Payment\DTO\CustomerDTO;
+use App\Services\Payment\DTO\TransactionDTO;
+use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Billing;
+use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Items;
+use App\Services\Payment\PaymentService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Fluent;
@@ -31,7 +32,7 @@ class Payment
         private readonly TransactionRepository $transactionRepository,
     )
     {
-        $this->paymentService = app(\App\Payment\Payment::class);
+        $this->paymentService = app(PaymentService::class);
     }
 
     /**

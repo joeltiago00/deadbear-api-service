@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Payment\Contracts;
+namespace App\Services\Payment\Contracts;
 
 use App\Exceptions\Payment\PixTransactionNotCreatedException;
-use App\Payment\DTO\TransactionDTO;
+use App\Services\Payment\DTO\TransactionDTO;
 
 interface PixInterface
 {

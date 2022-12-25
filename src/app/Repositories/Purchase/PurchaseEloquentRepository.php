@@ -3,13 +3,12 @@
 namespace App\Repositories\Purchase;
 
 use App\Exceptions\Purchase\PurchaseNotStored;
-use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\Transaction;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use App\Repositories\PurchaseItem\PurchaseItemEloquentRepository;
 use App\Repositories\Repository;
+use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use Illuminate\Support\Str;
 
 class PurchaseEloquentRepository extends Repository implements PurchaseRepository

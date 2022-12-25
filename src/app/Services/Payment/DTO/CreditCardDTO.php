@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\DTO;
+namespace App\Services\Payment\DTO;
 
 class CreditCardDTO
 {

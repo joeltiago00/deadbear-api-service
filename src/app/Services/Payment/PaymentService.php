@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Payment;
+namespace App\Services\Payment;
 
-use App\Payment\Contracts\PaymentServiceInterface;
+use App\Services\Payment\Contracts\PaymentServiceInterface;
 
-abstract class Payment implements PaymentServiceInterface
+abstract class PaymentService implements PaymentServiceInterface
 {
     /**
      * Instance of client of payment gateway

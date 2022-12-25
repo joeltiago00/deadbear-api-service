@@ -5,8 +5,8 @@ namespace App\Repositories\Transaction;
 use App\Exceptions\Transaction\TransactionNotStored;
 use App\Models\Customer;
 use App\Models\Transaction;
-use App\Payment\Contracts\TransactionResponseInterface;
 use App\Repositories\Repository;
+use App\Services\Payment\Contracts\TransactionResponseInterface;
 
 class TransactionEloquentRepository extends Repository implements TransactionRepository
 {

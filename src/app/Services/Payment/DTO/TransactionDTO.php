@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Payment\DTO;
+namespace App\Services\Payment\DTO;
 
 use App\Enums\Payment\PaymentMethodEnum;
-use App\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Payment\PaymentGateways\Pagarme\Transaction\Items;
+use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
+use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Billing;
+use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Items;
 use Exception;
 use Illuminate\Support\Carbon;
 
