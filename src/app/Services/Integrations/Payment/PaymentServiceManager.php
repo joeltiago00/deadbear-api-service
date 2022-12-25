@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Payment;
+namespace App\Services\Integrations\Payment;
 
 use App\Exceptions\Payment\PaymentGatewayInvalidException;
-use App\Services\Payment\Contracts\PaymentServiceInterface;
-use App\Services\Payment\PaymentGateways\Pagarme\Pagarme;
+use App\Services\Integrations\Payment\Contracts\PaymentServiceInterface;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Pagarme;
 use App\Types\PaymentGatewayTypes;
 
 class PaymentServiceManager

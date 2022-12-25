@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Payment;
+namespace App\Services\Integrations\Payment;
 
-use App\Services\Payment\Contracts\PaymentServiceInterface;
+use App\Services\Integrations\Payment\Contracts\PaymentServiceInterface;
 
 abstract class PaymentService implements PaymentServiceInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme\Responses;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme\Responses;
 
-use App\Services\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Integrations\Payment\Contracts\TransactionResponseInterface;
 use Illuminate\Support\Fluent;
 
 class PagarmeTransactionResponse implements TransactionResponseInterface

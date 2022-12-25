@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\Payment\Postback\InvalidPostback;
-use App\Services\Payment\PaymentService;
+use App\Services\Integrations\Payment\PaymentService;
 use Closure;
 use Illuminate\Http\Request;
 

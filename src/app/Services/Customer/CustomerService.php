@@ -5,7 +5,7 @@ namespace App\Services\Customer;
 use App\Core\Document\Document;
 use App\Models\Customer;
 use App\Repositories\Custumer\CustomerRepository;
-use App\Services\Payment\DTO\CustomerDTO;
+use App\Services\Integrations\Payment\DTO\CustomerDTO;
 use Illuminate\Support\Fluent;
 
 class CustomerService

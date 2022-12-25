@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme;
 
-use App\Services\Payment\Contracts\BoletoInterface;
-use App\Services\Payment\Contracts\CreditCardInterface;
-use App\Services\Payment\Contracts\PixInterface;
-use App\Services\Payment\PaymentService;
+use App\Services\Integrations\Payment\Contracts\BoletoInterface;
+use App\Services\Integrations\Payment\Contracts\CreditCardInterface;
+use App\Services\Integrations\Payment\Contracts\PixInterface;
+use App\Services\Integrations\Payment\PaymentService;
 use PagarMe\Client;
 
 class Pagarme extends PaymentService

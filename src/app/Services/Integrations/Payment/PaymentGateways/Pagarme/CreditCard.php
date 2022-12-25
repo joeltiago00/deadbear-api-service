@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme;
 
 use App\Exceptions\Payment\CreditCardNotCreatedException;
 use App\Exceptions\Payment\CreditCardNotGetedException;
 use App\Exceptions\Payment\CreditCardTransactionNotCreatedException;
-use App\Services\Payment\Contracts\CreditCardInterface;
-use App\Services\Payment\Contracts\CreditCardResponseInterface;
-use App\Services\Payment\Contracts\TransactionResponseInterface;
-use App\Services\Payment\DTO\CreditCardDTO;
-use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
-use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
-use App\Services\Payment\PaymentGateways\Pagarme\Responses\CreditCardResponse;
-use App\Services\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
+use App\Services\Integrations\Payment\Contracts\CreditCardInterface;
+use App\Services\Integrations\Payment\Contracts\CreditCardResponseInterface;
+use App\Services\Integrations\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Integrations\Payment\DTO\CreditCardDTO;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Contracts\PagarmeTransactionInterface;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Responses\CreditCardResponse;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
 use Illuminate\Support\Fluent;
 use PagarMe\Client;
 

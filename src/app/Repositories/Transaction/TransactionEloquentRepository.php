@@ -6,7 +6,7 @@ use App\Exceptions\Transaction\TransactionNotStored;
 use App\Models\Customer;
 use App\Models\Transaction;
 use App\Repositories\Repository;
-use App\Services\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Integrations\Payment\Contracts\TransactionResponseInterface;
 
 class TransactionEloquentRepository extends Repository implements TransactionRepository
 {

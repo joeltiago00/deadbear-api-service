@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme\Contracts;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme\Contracts;
 
 use PagarMe\Client;
 

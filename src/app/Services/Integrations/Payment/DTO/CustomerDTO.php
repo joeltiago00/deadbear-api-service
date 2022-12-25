@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Payment\DTO;
+namespace App\Services\Integrations\Payment\DTO;
 
 use App\Core\Document\Document;
 

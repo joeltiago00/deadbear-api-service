@@ -4,7 +4,7 @@ namespace App\Repositories\Transaction;
 
 use App\Models\Customer;
 use App\Models\Transaction;
-use App\Services\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Integrations\Payment\Contracts\TransactionResponseInterface;
 
 interface TransactionRepository
 {

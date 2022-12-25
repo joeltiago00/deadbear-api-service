@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Payment\Contracts;
+namespace App\Services\Integrations\Payment\Contracts;
 
 interface TransactionResponseInterface
 {

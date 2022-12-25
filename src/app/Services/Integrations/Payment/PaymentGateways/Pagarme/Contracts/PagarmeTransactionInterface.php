@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme\Contracts;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme\Contracts;
 
-use App\Services\Payment\DTO\CustomerDTO;
-use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Billing;
-use App\Services\Payment\PaymentGateways\Pagarme\Transaction\Items;
+use App\Services\Integrations\Payment\DTO\CustomerDTO;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Transaction\Billing;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Transaction\Items;
 
 interface PagarmeTransactionInterface
 {

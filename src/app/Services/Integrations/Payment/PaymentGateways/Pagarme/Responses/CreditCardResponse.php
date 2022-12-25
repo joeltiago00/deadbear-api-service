@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme\Responses;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme\Responses;
 
-use App\Services\Payment\Contracts\CreditCardResponseInterface;
+use App\Services\Integrations\Payment\Contracts\CreditCardResponseInterface;
 use Illuminate\Support\Fluent;
 
 class CreditCardResponse implements CreditCardResponseInterface

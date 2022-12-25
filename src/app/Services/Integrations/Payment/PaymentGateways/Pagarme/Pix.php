@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Services\Payment\PaymentGateways\Pagarme;
+namespace App\Services\Integrations\Payment\PaymentGateways\Pagarme;
 
-use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
-use App\Services\Payment\Contracts\BoletoInterface;
-use App\Services\Payment\DTO\TransactionDTO;
-use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
-use App\Services\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
+use App\Exceptions\Payment\PixTransactionNotCreatedException;
+use App\Services\Integrations\Payment\Contracts\PixInterface;
+use App\Services\Integrations\Payment\Contracts\TransactionResponseInterface;
+use App\Services\Integrations\Payment\DTO\TransactionDTO;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
+use App\Services\Integrations\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
 use Illuminate\Support\Fluent;
 use PagarMe\Client;
 
-class Boleto implements PagarmeOperationInterface, BoletoInterface
+class Pix implements PixInterface, PagarmeOperationInterface
 {
-
-    public function __construct(private readonly Client $client)
-    {
-    }
+    public function __construct(
+        private readonly Client $client
+    ){ }
 
     /**
-     * @throws BoletoTransactionNotCreatedException
+     * @throws PixTransactionNotCreatedException
      */
-    public function createTransaction(TransactionDTO $transaction): PagarmeTransactionResponse
+    public function createTransaction(TransactionDTO $transaction): TransactionResponseInterface
     {
         $payload = [
             'customer' => [
@@ -41,13 +41,13 @@ class Boleto implements PagarmeOperationInterface, BoletoInterface
             'postback_url' => $transaction->getPostbackUrl(),
             'payment_method' => $transaction->getPaymentMethod(),
             'amount' => $transaction->getAmount(),
-            'boleto_expiration_date' => $transaction->getBoletoExpirationDate(),
+            'pix_expiration_date' => $transaction->getExpirationDate(),
         ];
 
         try {
             $response = $this->client->transactions()->create($payload);
         } catch (\Exception $exception) {
-            throw new BoletoTransactionNotCreatedException($exception);
+            throw new PixTransactionNotCreatedException($exception);
         }
 
         return new PagarmeTransactionResponse(new Fluent($response));

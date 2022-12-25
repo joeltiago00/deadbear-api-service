@@ -6,8 +6,8 @@ use App\Exceptions\Customer\CustomerNotStored;
 use App\Exceptions\Customer\CustomerNotUpdated;
 use App\Models\Customer;
 use App\Repositories\Repository;
-use App\Services\Payment\DTO\CustomerDTO;
-use App\Services\Payment\DTO\CustomerDTO as CustomerAlias;
+use App\Services\Integrations\Payment\DTO\CustomerDTO;
+use App\Services\Integrations\Payment\DTO\CustomerDTO as CustomerAlias;
 use Exception;
 
 class CustomerEloquentRepository extends Repository implements CustomerRepository

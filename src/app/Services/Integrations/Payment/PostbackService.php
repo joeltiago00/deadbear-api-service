@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Payment;
+namespace App\Services\Integrations\Payment;
 
 use App\Core\Payment\Pix\Bank;
 use App\Core\Payment\Pix\Payer;
