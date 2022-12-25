@@ -3,13 +3,14 @@
 namespace App\Services\Payment\PaymentGateways\Pagarme;
 
 use App\Exceptions\Payment\BoletoTransactionNotCreatedException;
+use App\Services\Payment\Contracts\BoletoInterface;
 use App\Services\Payment\DTO\TransactionDTO;
 use App\Services\Payment\PaymentGateways\Pagarme\Contracts\PagarmeOperationInterface;
 use App\Services\Payment\PaymentGateways\Pagarme\Responses\PagarmeTransactionResponse;
 use Illuminate\Support\Fluent;
 use PagarMe\Client;
 
-class Boleto implements PagarmeOperationInterface
+class Boleto implements PagarmeOperationInterface, BoletoInterface
 {
 
     public function __construct(private readonly Client $client)
