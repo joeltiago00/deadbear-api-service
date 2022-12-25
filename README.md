@@ -1,4 +1,4 @@
-# Deadbear API Service
+# Simple Ecommerce API Service
 
 This application is a simple ecommerce with the function of managing payments (credit card, billet and pix) through Pagarme, and automatically sends via email when the payment is successful.
 
